@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\mateo\\source\\repos\\Unidad4-MAVII\\RagdollCanon\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B5F581FE-A1D1-434D-BF8C-DF3F80FE31D1}|RagdollCanon\\RagdollCanon.vcxproj|C:\\Users\\mateo\\source\\repos\\Unidad4-MAVII\\RagdollCanon\\RagdollCanon\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B5F581FE-A1D1-434D-BF8C-DF3F80FE31D1}|RagdollCanon\\RagdollCanon.vcxproj|solutionrelative:RagdollCanon\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.cpp",
+              "DocumentMoniker": "C:\\Users\\mateo\\source\\repos\\Unidad4-MAVII\\RagdollCanon\\RagdollCanon\\main.cpp",
+              "RelativeDocumentMoniker": "RagdollCanon\\main.cpp",
+              "ToolTip": "C:\\Users\\mateo\\source\\repos\\Unidad4-MAVII\\RagdollCanon\\RagdollCanon\\main.cpp",
+              "RelativeToolTip": "RagdollCanon\\main.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-28T14:14:55.058Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
