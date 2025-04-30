@@ -22,6 +22,7 @@ void Game::Loop()
 		wnd->clear(clearColor);// Limpia la ventana con el color clearColor
 		DoEvents();// Gestiona los eventos de la ventana
 		CheckCollitions();// Comprueba colisiones
+		CannonRotation(); //Actualizo el cañon
 		UpdatePhysics();// Actualiza el mundo físico
 		DrawGame();// Dibuja el juego
 		wnd->display();// Muestra la ventana
@@ -36,8 +37,35 @@ void Game::UpdatePhysics()
 	phyWorld->DebugDraw();// Dibuja el mundo físico en modo de depuración
 }
 
-void Game::DrawGame()
-{ }
+void Game::DrawGame(){
+	// Dibujar el cañon (cuerpo de control)
+	sf::RectangleShape cannonShape(sf::Vector2f(25.0f, 10.0f));
+	cannonShape.setFillColor(sf::Color::Green);
+	cannonShape.setPosition(controlBody->GetPosition().x, controlBody->GetPosition().y);
+	cannonShape.setOrigin(0, cannonShape.getSize().y / 2); // Origen en la base del cañón
+	cannonShape.setRotation(controlBody->GetAngle() * 180 / b2_pi); // Box2D usa radianes, SFML grados
+	wnd->draw(cannonShape);
+
+	// Dibujar las paredes
+	sf::RectangleShape leftWallShape(sf::Vector2f(10, alto)); // Alto de la ventana
+	leftWallShape.setFillColor(sf::Color::Black);
+	leftWallShape.setPosition(100, 0); // X = 100 para que comience donde termina el suelo
+	wnd->draw(leftWallShape);
+
+	// Dibujar el suelo
+	sf::RectangleShape groundShape(sf::Vector2f(500, 5));
+	groundShape.setFillColor(sf::Color::Red);
+	groundShape.setPosition(0, 95);
+	wnd->draw(groundShape);
+
+	//Dibujar el techo
+	sf::RectangleShape ceilinglShape(sf::Vector2f(500, 5));
+	ceilinglShape.setFillColor(sf::Color::Red);
+	ceilinglShape.setPosition(0, 0);
+	wnd->draw(ceilinglShape);
+
+
+}
 // Gestiona los eventos de la ventana
 void Game::DoEvents()
 {
@@ -49,12 +77,12 @@ void Game::DoEvents()
 		case Event::Closed:// Cierra la ventana si se presiona el botón de cerrar
 			wnd->close();
 			break;
-		case Event::MouseButtonPressed:// Crea un cuerpo triangular dinámico en la posición del clic del ratón
-			b2Body* body = Box2DHelper::CreateTriangularDynamicBody(phyWorld, b2Vec2(0.0f, 0.0f), 10.0f, 1.0f, 4.0f, 0.1f);
-			// Transforma las coordenadas del clic del ratón según la vista activa
-			Vector2f pos = wnd->mapPixelToCoords(Vector2i(evt.mouseButton.x, evt.mouseButton.y));
-			body->SetTransform(b2Vec2(pos.x, pos.y), 0.0f);
-			break;
+		//case Event::MouseButtonPressed:// Crea un cuerpo triangular dinámico en la posición del clic del ratón
+		//	b2Body* body = Box2DHelper::CreateTriangularDynamicBody(phyWorld, b2Vec2(0.0f, 0.0f), 10.0f, 1.0f, 4.0f, 0.1f);
+		//	// Transforma las coordenadas del clic del ratón según la vista activa
+		//	Vector2f pos = wnd->mapPixelToCoords(Vector2i(evt.mouseButton.x, evt.mouseButton.y));
+		//	body->SetTransform(b2Vec2(pos.x, pos.y), 0.0f);
+		//	break;
 		}
 	}
 }
@@ -72,6 +100,24 @@ void Game::SetZoom()
 	// Define el área visible del juego
 	View v(Vector2f(50.0f, 50.0f), Vector2f(100.0f, 100.0f));
 	wnd->setView(v);
+}
+
+void Game::CannonRotation() {
+	// Obtener posición del mouse en coordenadas del mundo
+	Vector2i mousePixel = Mouse::getPosition(*wnd);
+	Vector2f mouseWorld = wnd->mapPixelToCoords(mousePixel);
+
+	// Obtener posición del cañón en pixeles
+	b2Vec2 cannonPosMeters = controlBody->GetPosition();
+	Vector2f cannonPosPixels(cannonPosMeters.x, cannonPosMeters.y); 
+
+	// Calcular ángulo hacia el mouse
+	float dx = mouseWorld.x - cannonPosPixels.x;
+	float dy = mouseWorld.y - cannonPosPixels.y;
+	float angle = std::atan2(dy, dx); //Radianes
+
+	// Aplicar rotación
+	controlBody->SetTransform(controlBody->GetPosition(), angle); 
 }
 
 void Game::InitPhysics()
@@ -98,16 +144,23 @@ void Game::InitPhysics()
 	b2Body* topWallBody = Box2DHelper::CreateRectangularStaticBody(phyWorld, 100, 10);
 	topWallBody->SetTransform(b2Vec2(50.0f, 0.0f), 0.0f);
 
+	// Creación del cañón
+	controlBody = Box2DHelper::CreateRectangularKinematicBody(phyWorld, 25, 10);
+	controlBody->SetTransform(b2Vec2(5.0f, 100.0f), 0.0f);
+
 	// Crea una esfera y una caja unidas por una articulación revoluta (Esta es la parte del RevoluteJoint)
-	b2Body* EsferaRev = Box2DHelper::CreateCircularStaticBody(phyWorld, 5.0f);
+	/*b2Body* EsferaRev = Box2DHelper::CreateCircularStaticBody(phyWorld, 5.0f);
 	EsferaRev->SetTransform(b2Vec2(50.0f, 50.0f), 0.0f);
 	b2Body* CajaRev = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 5, 5, 1.0f, 1.0f, 1.0f);
 	CajaRev->SetTransform(b2Vec2(50.0f, 70.0f), 0.0f);
 	b2RevoluteJoint* revJoint = Box2DHelper::CreateRevoluteJoint(phyWorld, EsferaRev, EsferaRev->GetWorldCenter(),
-		CajaRev, -b2_pi / 2.0f, b2_pi / 2.0f, 2.0f, 1000.0f, true, true);
+		CajaRev, -b2_pi / 2.0f, b2_pi / 2.0f, 2.0f, 1000.0f, true, true);*/
 }
+
+
 
 Game::~Game(void)
 { }
 
 
+// /c/Users/mateo/source/repos/Unidad4-MAVII
