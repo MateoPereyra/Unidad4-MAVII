@@ -7,6 +7,14 @@
       "RelativeMoniker": "D:0:0:{B5F581FE-A1D1-434D-BF8C-DF3F80FE31D1}|RagdollCanon\\RagdollCanon.vcxproj|solutionrelative:RagdollCanon\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{B5F581FE-A1D1-434D-BF8C-DF3F80FE31D1}|RagdollCanon\\RagdollCanon.vcxproj|C:\\Users\\mateo\\source\\repos\\Unidad4-MAVII\\RagdollCanon\\RagdollCanon\\Ragdoll.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B5F581FE-A1D1-434D-BF8C-DF3F80FE31D1}|RagdollCanon\\RagdollCanon.vcxproj|solutionrelative:RagdollCanon\\Ragdoll.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5F581FE-A1D1-434D-BF8C-DF3F80FE31D1}|RagdollCanon\\RagdollCanon.vcxproj|C:\\Users\\mateo\\source\\repos\\Unidad4-MAVII\\RagdollCanon\\RagdollCanon\\Ragdoll.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B5F581FE-A1D1-434D-BF8C-DF3F80FE31D1}|RagdollCanon\\RagdollCanon.vcxproj|solutionrelative:RagdollCanon\\Ragdoll.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B5F581FE-A1D1-434D-BF8C-DF3F80FE31D1}|RagdollCanon\\RagdollCanon.vcxproj|C:\\Users\\mateo\\source\\repos\\Unidad4-MAVII\\RagdollCanon\\RagdollCanon\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{B5F581FE-A1D1-434D-BF8C-DF3F80FE31D1}|RagdollCanon\\RagdollCanon.vcxproj|solutionrelative:RagdollCanon\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
@@ -18,17 +26,42 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Ragdoll.cpp",
+              "DocumentMoniker": "C:\\Users\\mateo\\source\\repos\\Unidad4-MAVII\\RagdollCanon\\RagdollCanon\\Ragdoll.cpp",
+              "RelativeDocumentMoniker": "RagdollCanon\\Ragdoll.cpp",
+              "ToolTip": "C:\\Users\\mateo\\source\\repos\\Unidad4-MAVII\\RagdollCanon\\RagdollCanon\\Ragdoll.cpp",
+              "RelativeToolTip": "RagdollCanon\\Ragdoll.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAABUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-04T21:36:23.798Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Ragdoll.h",
+              "DocumentMoniker": "C:\\Users\\mateo\\source\\repos\\Unidad4-MAVII\\RagdollCanon\\RagdollCanon\\Ragdoll.h",
+              "RelativeDocumentMoniker": "RagdollCanon\\Ragdoll.h",
+              "ToolTip": "C:\\Users\\mateo\\source\\repos\\Unidad4-MAVII\\RagdollCanon\\RagdollCanon\\Ragdoll.h",
+              "RelativeToolTip": "RagdollCanon\\Ragdoll.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-05-04T21:34:56.77Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Game.h",
               "DocumentMoniker": "C:\\Users\\mateo\\source\\repos\\Unidad4-MAVII\\RagdollCanon\\RagdollCanon\\Game.h",
               "RelativeDocumentMoniker": "RagdollCanon\\Game.h",
               "ToolTip": "C:\\Users\\mateo\\source\\repos\\Unidad4-MAVII\\RagdollCanon\\RagdollCanon\\Game.h",
               "RelativeToolTip": "RagdollCanon\\Game.h",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAACEAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAqwBkAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-04-28T14:27:49.166Z"
             },
@@ -40,7 +73,7 @@
               "RelativeDocumentMoniker": "RagdollCanon\\Game.cpp",
               "ToolTip": "C:\\Users\\mateo\\source\\repos\\Unidad4-MAVII\\RagdollCanon\\RagdollCanon\\Game.cpp",
               "RelativeToolTip": "RagdollCanon\\Game.cpp",
-              "ViewState": "AgIAAJYAAAAAAAAAAAAqwKUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAqwMAAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-04-28T14:14:55.058Z",
               "EditorCaption": ""

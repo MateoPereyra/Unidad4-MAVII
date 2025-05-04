@@ -1,5 +1,8 @@
 #include "Game.h"
+#include "Ragdoll.h"
 #include "Box2DHelper.h"
+
+std::vector<Ragdoll*> ragdolls;
 
 // Constructor de la clase Game
 Game::Game(int ancho, int alto, std::string titulo)
@@ -69,6 +72,19 @@ void Game::DrawGame(){
 // Gestiona los eventos de la ventana
 void Game::DoEvents()
 {
+	// Obtener posición del mouse en coordenadas del mundo
+	Vector2i mousePixel = Mouse::getPosition(*wnd);
+	Vector2f mouseWorld = wnd->mapPixelToCoords(mousePixel);
+
+	// Obtener posición del cañón en pixeles
+	b2Vec2 cannonPosMeters = controlBody->GetPosition();
+	Vector2f cannonPosPixels(cannonPosMeters.x, cannonPosMeters.y);
+
+	// Calcular ángulo hacia el mouse
+	float dx = mouseWorld.x - cannonPosPixels.x;
+	float dy = mouseWorld.y - cannonPosPixels.y;
+	float angle = std::atan2(dy, dx); //Radianes
+
 	Event evt;
 	while (wnd->pollEvent(evt))
 	{
@@ -77,12 +93,23 @@ void Game::DoEvents()
 		case Event::Closed:// Cierra la ventana si se presiona el botón de cerrar
 			wnd->close();
 			break;
-		//case Event::MouseButtonPressed:// Crea un cuerpo triangular dinámico en la posición del clic del ratón
-		//	b2Body* body = Box2DHelper::CreateTriangularDynamicBody(phyWorld, b2Vec2(0.0f, 0.0f), 10.0f, 1.0f, 4.0f, 0.1f);
-		//	// Transforma las coordenadas del clic del ratón según la vista activa
-		//	Vector2f pos = wnd->mapPixelToCoords(Vector2i(evt.mouseButton.x, evt.mouseButton.y));
-		//	body->SetTransform(b2Vec2(pos.x, pos.y), 0.0f);
-		//	break;
+		case Event::MouseButtonPressed:
+			if (evt.mouseButton.button == Mouse::Left) {
+				// Posición inicial del cañón
+				b2Vec2 spawnPos = controlBody->GetWorldPoint(b2Vec2(25.0f / 2.0f, 0.0f)); // punta del cañón
+
+				// Crear ragdoll
+				Ragdoll* ragdoll = new Ragdoll(phyWorld, spawnPos, angle);
+
+				// Impulso en la dirección que apunta el cañón
+				float angle = controlBody->GetAngle();
+				b2Vec2 dir(std::cos(angle), std::sin(angle));
+			b2Vec2 impulse(dir.x * 50.0f, dir.y * 50.0f);
+
+			ragdoll->ApplyImpulse(impulse);
+				ragdolls.push_back(ragdoll);
+			}
+			break;
 		}
 	}
 }

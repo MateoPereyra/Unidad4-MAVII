@@ -143,11 +143,13 @@
   <ItemGroup>
     <ClCompile Include="Box2dEmptyApp.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Ragdoll.cpp" />
     <ClCompile Include="SFMLRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2DHelper.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Ragdoll.h" />
     <ClInclude Include="SFMLRenderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
