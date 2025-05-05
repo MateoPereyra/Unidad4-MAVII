@@ -96,7 +96,7 @@ void Game::DoEvents()
 		case Event::MouseButtonPressed:
 			if (evt.mouseButton.button == Mouse::Left) {
 				// Posición inicial del cañón
-				b2Vec2 spawnPos = controlBody->GetWorldPoint(b2Vec2(25.0f / 2.0f, 0.0f)); // punta del cañón
+				b2Vec2 spawnPos = controlBody->GetWorldCenter() + b2Vec2(10.0f / angle, 10.0f / angle); // punta del cañón
 
 				// Crear ragdoll
 				Ragdoll* ragdoll = new Ragdoll(phyWorld, spawnPos, angle);
@@ -104,7 +104,7 @@ void Game::DoEvents()
 				// Impulso en la dirección que apunta el cañón
 				float angle = controlBody->GetAngle();
 				b2Vec2 dir(std::cos(angle), std::sin(angle));
-			b2Vec2 impulse(dir.x * 50.0f, dir.y * 50.0f);
+			b2Vec2 impulse(dir.x * 400.0f, dir.y * 400.0f);
 
 			ragdoll->ApplyImpulse(impulse);
 				ragdolls.push_back(ragdoll);
@@ -175,13 +175,6 @@ void Game::InitPhysics()
 	controlBody = Box2DHelper::CreateRectangularKinematicBody(phyWorld, 25, 10);
 	controlBody->SetTransform(b2Vec2(5.0f, 100.0f), 0.0f);
 
-	// Crea una esfera y una caja unidas por una articulación revoluta (Esta es la parte del RevoluteJoint)
-	/*b2Body* EsferaRev = Box2DHelper::CreateCircularStaticBody(phyWorld, 5.0f);
-	EsferaRev->SetTransform(b2Vec2(50.0f, 50.0f), 0.0f);
-	b2Body* CajaRev = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 5, 5, 1.0f, 1.0f, 1.0f);
-	CajaRev->SetTransform(b2Vec2(50.0f, 70.0f), 0.0f);
-	b2RevoluteJoint* revJoint = Box2DHelper::CreateRevoluteJoint(phyWorld, EsferaRev, EsferaRev->GetWorldCenter(),
-		CajaRev, -b2_pi / 2.0f, b2_pi / 2.0f, 2.0f, 1000.0f, true, true);*/
 }
 
 
