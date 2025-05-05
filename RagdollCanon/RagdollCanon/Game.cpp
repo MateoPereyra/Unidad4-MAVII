@@ -95,25 +95,25 @@ void Game::DoEvents()
 		case Event::MouseButtonPressed:
 
 			if (evt.mouseButton.button == Mouse::Left) {
-				// Posición inicial del cañón
-				b2Vec2 spawnPos = controlBody->GetWorldCenter() + 10.0f * b2Vec2(std::cos(angle), std::sin(angle));
-
-				// Crear ragdoll
-				Ragdoll* ragdoll = new Ragdoll(phyWorld, spawnPos, angle);
-
-				// Dirección hacia donde apunta el cañón
+				// Ángulo del cañón
+				float angle = controlBody->GetAngle();
 				b2Vec2 dir(std::cos(angle), std::sin(angle));
 
-				// Calcular distancia entre mouse y cañón
-				float dx = mouseWorld.x - cannonPosPixels.x;
-				float dy = mouseWorld.y - cannonPosPixels.y;
+				// Posición de aparición del ragdoll (desde la punta del cañón)
+				b2Vec2 spawnPos = controlBody->GetWorldCenter() + b2Vec2(dir.x * 15.0f, dir.y * 15.0f);
+
+				// Calcular distancia al mouse para la fuerza
+				Vector2i mousePixel = Mouse::getPosition(*wnd);
+				Vector2f mouseWorld = wnd->mapPixelToCoords(mousePixel);
+				b2Vec2 cannonPos(controlBody->GetPosition().x, controlBody->GetPosition().y);
+				float dx = mouseWorld.x - cannonPos.x;
+				float dy = mouseWorld.y - cannonPos.y;
 				float distance = std::sqrt(dx * dx + dy * dy);
+				float power = std::min(distance * 10.0f, 1000.0f); // Escala limitada
 
-				float power = std::min(distance * 10.0f, 1000.0f); // Máximo impulso de 1000
-
-				// Impulso proporcional a la distancia
+				// Crear el ragdoll
+				Ragdoll* ragdoll = new Ragdoll(phyWorld, spawnPos, angle);
 				b2Vec2 impulse(dir.x * power, dir.y * power);
-
 				ragdoll->ApplyImpulse(impulse);
 				ragdolls.push_back(ragdoll);
 			}
@@ -174,6 +174,15 @@ void Game::InitPhysics()
 	b2Body* topWallBody = Box2DHelper::CreateRectangularStaticBody(phyWorld, 100, 10);
 	topWallBody->SetTransform(b2Vec2(50.0f, 0.0f), 0.0f);
 
+	b2Body* pelota = Box2DHelper::CreateCircularDynamicBody(phyWorld, 2.0f, 1.0f, 1.0f, 0.3f);
+	pelota->SetTransform(b2Vec2(60.0f, 20.0f), 0.0f);
+
+	b2Body* plataforma = Box2DHelper::CreateRectangularStaticBody(phyWorld, 30.0f, 5.0f);
+	plataforma->SetTransform(b2Vec2(60.0f, 22.0f), 0.0f);
+
+	b2Body* box = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 6.0f, 6.0f, 0.5f, 0.3f, 0.3f);
+	box->SetTransform(b2Vec2(80.0f, 94.0f), 0.0f);
+
 	// Creación del cañón
 	controlBody = Box2DHelper::CreateRectangularKinematicBody(phyWorld, 25, 10);
 	controlBody->SetTransform(b2Vec2(5.0f, 100.0f), 0.0f);
@@ -184,6 +193,3 @@ void Game::InitPhysics()
 
 Game::~Game(void)
 { }
-
-
-// /c/Users/mateo/source/repos/Unidad4-MAVII
