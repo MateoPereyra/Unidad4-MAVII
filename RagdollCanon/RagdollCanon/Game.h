@@ -31,7 +31,6 @@ public:
 
 	//Constructores, destructores e inicializadores
 	Game(int ancho, int alto, std::string titulo);
-	void CheckCollitions();
 	~Game(void);
 	void InitPhysics();
 

@@ -24,7 +24,6 @@ void Game::Loop()
 	{
 		wnd->clear(clearColor);// Limpia la ventana con el color clearColor
 		DoEvents();// Gestiona los eventos de la ventana
-		CheckCollitions();// Comprueba colisiones
 		CannonRotation(); //Actualizo el cañon
 		UpdatePhysics();// Actualiza el mundo físico
 		DrawGame();// Dibuja el juego
@@ -42,7 +41,7 @@ void Game::UpdatePhysics()
 
 void Game::DrawGame(){
 	// Dibujar el cañon (cuerpo de control)
-	sf::RectangleShape cannonShape(sf::Vector2f(25.0f, 10.0f));
+	sf::RectangleShape cannonShape(sf::Vector2f(15.0f, 10.0f));
 	cannonShape.setFillColor(sf::Color::Green);
 	cannonShape.setPosition(controlBody->GetPosition().x, controlBody->GetPosition().y);
 	cannonShape.setOrigin(0, cannonShape.getSize().y / 2); // Origen en la base del cañón
@@ -94,29 +93,33 @@ void Game::DoEvents()
 			wnd->close();
 			break;
 		case Event::MouseButtonPressed:
+
 			if (evt.mouseButton.button == Mouse::Left) {
 				// Posición inicial del cañón
-				b2Vec2 spawnPos = controlBody->GetWorldCenter() + b2Vec2(10.0f / angle, 10.0f / angle); // punta del cañón
+				b2Vec2 spawnPos = controlBody->GetWorldCenter() + 10.0f * b2Vec2(std::cos(angle), std::sin(angle));
 
 				// Crear ragdoll
 				Ragdoll* ragdoll = new Ragdoll(phyWorld, spawnPos, angle);
 
-				// Impulso en la dirección que apunta el cañón
-				float angle = controlBody->GetAngle();
+				// Dirección hacia donde apunta el cañón
 				b2Vec2 dir(std::cos(angle), std::sin(angle));
-			b2Vec2 impulse(dir.x * 400.0f, dir.y * 400.0f);
 
-			ragdoll->ApplyImpulse(impulse);
+				// Calcular distancia entre mouse y cañón
+				float dx = mouseWorld.x - cannonPosPixels.x;
+				float dy = mouseWorld.y - cannonPosPixels.y;
+				float distance = std::sqrt(dx * dx + dy * dy);
+
+				float power = std::min(distance * 10.0f, 1000.0f); // Máximo impulso de 1000
+
+				// Impulso proporcional a la distancia
+				b2Vec2 impulse(dir.x * power, dir.y * power);
+
+				ragdoll->ApplyImpulse(impulse);
 				ragdolls.push_back(ragdoll);
 			}
 			break;
 		}
 	}
-}
-
-void Game::CheckCollitions()
-{
-	// Veremos mas adelante
 }
 
 // Definimos el area del mundo que veremos en nuestro juego
